@@ -4,11 +4,13 @@ import time, datetime, os, click
 @click.option('--path','-p',help='path to git repository')
 @click.option('--seconds','-s', default=300, help='seconds between each auto commit')
 def main(path,seconds):
-    if os.path.exists(path):
+    path = path.replace("\\", "/")
+    print(path)
+    if os.path.isdir(path):
         c = 0
         while True:
             print(datetime.datetime.now())
-            os.system(path + " && git add -A && git commit -m 'auto"+ str(c) +"' && git push") 
+            os.system("cd "+path + " && git add -A && git commit -m 'auto"+ str(c) +"' && git push") 
             time.sleep(seconds)
         c = c + 1
     else:
